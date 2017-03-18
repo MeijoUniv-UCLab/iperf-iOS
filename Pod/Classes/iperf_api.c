@@ -1799,7 +1799,7 @@ iperf_defaults(struct iperf_test *testp)
     testp->settings->socket_bufsize = 0;    /* use autotuning */
     
     // modified: sotosuzuki
-    // TCP_BLKSIZEをUDP_BLKSIZEに変更
+    // TCP_BLKSIZEをUDP_BLKSIZEに変更(送信するウィンドウサイズが異なるため)
     //testp->settings->blksize = DEFAULT_TCP_BLKSIZE;
     testp->settings->blksize = DEFAULT_UDP_BLKSIZE;
     testp->settings->rate = 0;
@@ -1816,7 +1816,7 @@ iperf_defaults(struct iperf_test *testp)
     SLIST_INIT(&testp->protocols);
     
     // modified: sotosuzuki
-    // tcpの情報をコメントアウト
+    // tcpの情報をコメントアウト(強制的にUDPを読み込ませたいため，必要のないTCPの情報を削除)
     /*
     tcp = protocol_new();
     if (!tcp)
@@ -1849,12 +1849,12 @@ iperf_defaults(struct iperf_test *testp)
     udp->init = iperf_udp_init;
     
     // modified: sotosuzuki
-    // リストの先頭にUDPの情報を入れるように変更
+    // リストの先頭にUDPの情報を入れるように変更（TCPの情報は必要ないため，リストの先頭に入れる情報をUDP用に変更）
     //SLIST_INSERT_AFTER(tcp, udp, protocols);
     SLIST_INSERT_HEAD(&testp->protocols, udp, protocols);
 
     // modified: sotosuzuki
-    // セットする情報をUDPの情報に変更
+    // セットする情報をUDPの情報に変更（TCPの情報は必要ないため，代わりにUDPの情報を変数testpにセット）
     //set_protocol(testp, Ptcp);
     set_protocol(testp, Pudp);
     

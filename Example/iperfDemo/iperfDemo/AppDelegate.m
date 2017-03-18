@@ -64,6 +64,11 @@
         // Switch the iPerf3 server from https://iperf.fr/iperf-servers.php
         iperf_set_test_server_hostname(test, "iperf.scottlinux.com");
         iperf_set_test_server_port(test, 5201);
+        
+        // modified: sotosuzuki
+        // 測定時間の設定（第二引数に秒数単位で数値を設定）
+        iperf_set_test_duration(test, 30);
+        
         iperf_set_test_template(test, buf);
 //        iperf_set_test_authentication(test, "authentication");
         // Comment out this line to see to realtime log
